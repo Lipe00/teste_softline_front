@@ -38,7 +38,7 @@ ___
 ___
 ## Como Executar
 
-#⚠️ Importante: Não abra os arquivos HTML diretamente no navegador (file://…). O login e armazenamento do token JWT dependem de um servidor local para funcionar corretamente.
+# ⚠️ Importante: Não abra os arquivos HTML diretamente no navegador (file://…). O login e armazenamento do token JWT dependem de um servidor local para funcionar corretamente.
 
 - Certifique-se que a API backend está ativa e rodando (`dotnet run`), normalmente em:
 `https://localhost:7138`
