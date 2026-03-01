@@ -24,13 +24,11 @@ ___
 ## Estrutura de Pastas
 ```plaintext
 frontend/
-├── css/                # Estilos personalizados (se houver)
+├── css/                # Estilos personalizados de alguns elementos do index
 ├── js/                 # Scripts JavaScript, incluindo chamadas à API
-│   ├── API_KEY.js      # Base URL da API e constantes
-│   └── main.js         # Lógica de front-end principal
-├── pages/              # Páginas HTML (clientes, produtos, login, formulário)
-├── img/                # Imagens e ícones
-└── index.html          # Página inicial ou login
+│   ├── API_KEY.js      # Base URL da API (modifique caso esteja rodando ela em uma url diferente de http://127.0.0.1:7138)
+├── img/                # logo da softline
+└── index.html          # Página inicial
 ```
 ___
 ## Requisitos
