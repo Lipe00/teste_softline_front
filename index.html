@@ -1,0 +1,105 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Softline :: Home</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet">
+</head>
+<style>
+        body {
+            background-color: #1e1e2f;
+        }
+
+        .menu-card {
+            transition: 0.3s;
+            cursor: pointer;
+            border-radius: 15px;
+        }
+
+        .menu-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .menu-icon {
+            font-size: 50px;
+        }
+    </style>
+<body class="d-flex align-items-center justify-content-center vh-100">
+    <div class="container text-center">
+        <h2 class="text-white mb-5">Menu Principal</h2>
+
+        <div class="row justify-content-center g-4">
+
+            <!-- Cliente -->
+            <div class="col-md-3">
+                <div class="card menu-card p-4"
+                     onclick="window.location.href='clientes.html'">
+                    <div class="card-body">
+                        <div class="menu-icon mb-3"><i class="fa-solid fa-user"></i></div>
+                        <h5 class="card-title">Cliente</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto -->
+            <div class="col-md-3">
+                <div class="card menu-card p-4"
+                     onclick="window.location.href='produtos.html'">
+                    <div class="card-body">
+                        <div class="menu-icon mb-3"><i class="fa-solid fa-box-open"></i></div>
+                        <h5 class="card-title">Produto</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usuário -->
+            <div class="col-md-3">
+                <div class="card menu-card p-4"
+                     onclick="window.location.href='usuarios.html'">
+                    <div class="card-body">
+                        <div class="menu-icon mb-3"><i class="fa-solid fa-user-gear"></i></div>
+                        <h5 class="card-title">Usuário</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="js/API_KEY.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        $(document).ready(function () {
+
+        const token = checkAuth();
+
+
+            $.ajax({
+                url: API_BASE + "/Auth/me",
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                success: function (response) {
+                    console.log("Autenticado:", response);
+                },
+                error: function () {
+                    console.log("Token inválido");
+                localStorage.removeItem("token");
+                window.location.href = "login.html";
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
