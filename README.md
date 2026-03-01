@@ -38,7 +38,7 @@ ___
 ___
 ## Como Executar
 
-# ⚠️ Importante: Não abra os arquivos HTML diretamente no navegador (file://…). O login e armazenamento do token JWT dependem de um servidor local para funcionar corretamente.
+> ⚠️ Importante: Não abra os arquivos HTML diretamente no navegador (file://…). O login e armazenamento do token JWT dependem de um servidor local para funcionar corretamente.
 
 - Certifique-se que a API backend está ativa e rodando (`dotnet run`), normalmente em:
 `https://localhost:7138`
@@ -51,7 +51,7 @@ ___
 
 - O projeto será servido em algo como `http://127.0.0.1:5500`.
 
-> Alternativamente, você pode usar qualquer servidor HTTP local (ex: http-server do Node.js).
+  > Alternativamente, você pode usar qualquer servidor HTTP local (ex: http-server do Node.js).
 
 - Abra o navegador no endereço fornecido pelo Live Server (ex: `http://127.0.0.1:5500`).
 
