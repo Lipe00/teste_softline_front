@@ -1,10 +1,10 @@
-##Desafio Técnico Softline – Frontend
+## Desafio Técnico Softline – Frontend
 
 Este projeto é o frontend do desafio técnico Softline, desenvolvido com HTML, JavaScript, jQuery e Bootstrap, consumindo a API backend em .NET 8.
 
 Ele permite registro do primeiro usuário, login via JWT e operações de CRUD para clientes e produtos.
 ___
-#Funcionalidades
+# Funcionalidades
 
 -Criar e editar clientes
 -Criar e editar produtos
@@ -13,7 +13,7 @@ ___
 
 >⚠️ Para utilizar o frontend, é necessário que a API backend esteja rodando localmente com as migrations aplicadas. É possível localizá-la nesse [repositório](https://github.com/Lipe00/teste_softline_api)
 ___
-##Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 -HTML5 e CSS3
 -JavaScript (ES6) e jQuery
@@ -21,7 +21,7 @@ ___
 -API backend em .NET 8 com JWT
 -MySQL (gerenciado pelo backend)
 ___
-##Estrutura de Pastas
+## Estrutura de Pastas
 ```plaintext
 frontend/
 ├── css/                # Estilos personalizados (se houver)
@@ -33,12 +33,12 @@ frontend/
 └── index.html          # Página inicial ou login
 ```
 ___
-##Requisitos
+## Requisitos
 
 -Navegador moderno (Chrome, Firefox, Edge)
 -API backend rodando localmente em `https://localhost:7138`
 ___
-##Como Executar
+## Como Executar
 
 #⚠️ Importante: Não abra os arquivos HTML diretamente no navegador (file://…). O login e armazenamento do token JWT dependem de um servidor local para funcionar corretamente.
 
