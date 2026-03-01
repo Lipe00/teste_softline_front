@@ -1,0 +1,34 @@
+body 
+{
+    background-color: #1e1e2f;
+}
+
+.menu-card {
+    transition: 0.3s;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.menu-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.menu-icon {
+    font-size: 50px;
+}
+.btn-outline-logout {
+    background-color: transparent;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    padding: 10px 40px;
+    font-size: 16px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-logout:hover {
+    background-color: #dc3545;
+    color: white;
+    transform: scale(1.05);
+}

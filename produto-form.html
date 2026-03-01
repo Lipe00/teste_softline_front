@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Softline :: Produto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="js/API_KEY.js"></script>
+</head>
+
+<body class="bg-light">
+
+<div id="navbar-container"></div>
+
+<div class="container mt-5">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h4 id="titulo-form">Cadastrar Produto</h4>
+            <hr>
+
+            <form id="form-produto">
+
+                <div class="mb-3">
+                    <label class="form-label">Código</label>
+                    <input type="text"
+                        class="form-control"
+                        id="code"
+                        required
+                        oninput="this.value = this.value.replace(/\D/g, '')">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Descrição</label>
+                    <input type="text" class="form-control" id="description" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Código de Barras</label>
+                    <input type="text" class="form-control" id="barCode" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Preço</label>
+                    <input type="text"
+                        class="form-control"
+                        id="price"
+                        inputmode="decimal"
+                        pattern="^\d+([,]\d{1,2})?$"
+                        placeholder="Ex: 10,50"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Peso Bruto (kg)</label>
+                    <input type="text"
+                        class="form-control"
+                        id="grossWeight"
+                        inputmode="decimal"
+                        pattern="^\d+([,]\d{1,3})?$"
+                        placeholder="Ex: 1,250"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Peso Líquido (kg)</label>
+                    <input type="text"
+                        class="form-control"
+                        id="netWeight"
+                        inputmode="decimal"
+                        pattern="^\d+([,]\d{1,3})?$"
+                        placeholder="Ex: 1,200"
+                        required>
+                </div>
+
+                <button type="submit" class="btn btn-success">Salvar</button>
+                <button type="button" class="btn btn-secondary"
+                        onclick="window.location.href='produtos.html'">
+                    Cancelar
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<script src="./js/api.js"></script>
+<script>
+
+// ======================
+// Variáveis globais
+// ======================
+const token = localStorage.getItem("token");
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+const API_URL = API_BASE + "/Product";
+
+// ======================
+// Inicialização
+// ======================
+$(document).ready(function () {
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    $("#navbar-container").load("navbar.html");
+
+    if (id) {
+        $("#titulo-form").text("Editar Produto");
+        carregarProduto(id);
+    }
+
+    $("#price, #grossWeight, #netWeight").on("input", function () {
+        this.value = this.value.replace(/[^0-9,]/g, '');
+    });
+    aplicarMascaraDecimal("#price", 2);
+    aplicarMascaraDecimal("#grossWeight", 3);
+    aplicarMascaraDecimal("#netWeight", 3);
+
+    $("#form-produto").submit(function (e) {
+        e.preventDefault();
+
+        if (id) {
+            atualizarProduto(id);
+        } else {
+            criarProduto();
+        }
+    });
+});
+
+// ======================
+// Funções
+// ======================
+
+function carregarProduto(id) {
+
+    $.ajax({
+        url: API_URL + "/" + id,
+        type: "GET",
+        success: function (p) {
+            $("#code").val(p.code);
+            $("#description").val(p.description);
+            $("#barCode").val(p.barCode);
+            $("#price").val(formatarBR(p.price, 2));
+            $("#grossWeight").val(formatarBR(p.grossWeight, 3));
+            $("#netWeight").val(formatarBR(p.netWeight, 3));
+        },
+        error: function () {
+            alert("Erro ao carregar produto");
+        }
+    });
+}
+
+function formatarBR(valor, casas) {
+    if (!valor) return "";
+    return parseFloat(valor).toFixed(casas).replace(".", ",");
+}
+
+function criarProduto() {
+
+    const produto = pegarDadosFormulario();
+
+    $.ajax({
+        url: API_URL,
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(produto),
+        success: function () {
+            alert("Produto cadastrado com sucesso!");
+            window.location.href = "produtos.html";
+        },
+        error: function () {
+            alert("Erro ao cadastrar produto.");
+        }
+    });
+}
+
+
+function atualizarProduto(id) {
+
+    const produto = pegarDadosFormulario();
+
+    $.ajax({
+        url: API_URL + "/" + id,
+        type: "PUT",
+        contentType: "application/json",
+        data: JSON.stringify(produto),
+        success: function () {
+            alert("Produto atualizado com sucesso!");
+            window.location.href = "produtos.html";
+        },
+        error: function () {
+            alert("Erro ao atualizar produto.");
+        }
+    });
+}
+
+
+function pegarDadosFormulario() {
+    return {
+        code: parseInt($("#code").val()),
+        description: $("#description").val(),
+        barCode: $("#barCode").val(),
+        price: converterParaDecimal($("#price").val()),
+        grossWeight: converterParaDecimal($("#grossWeight").val()),
+        netWeight: converterParaDecimal($("#netWeight").val()),
+    };
+}
+function converterParaDecimal(valor) {
+    if (!valor) return 0;
+    return parseFloat(valor.replace(",", "."));
+}
+
+function aplicarMascaraDecimal(selector, casas) {
+
+    $(selector).on("input", function () {
+
+        let valor = $(this).val();
+
+        // Remove tudo que não é número
+        valor = valor.replace(/\D/g, "");
+
+        if (!valor) {
+            $(this).val("");
+            return;
+        }
+
+        // Converte para número decimal baseado nas casas
+        let numero = (parseInt(valor) / Math.pow(10, casas)).toFixed(casas);
+
+        // Formata para padrão brasileiro
+        numero = numero
+            .replace(".", ",")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        $(this).val(numero);
+    });
+
+}
+
+$(document).ajaxError(function (event, xhr) {
+    if (xhr.status === 401) {
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+    }
+});
+
+</script>
+
+</body>
+</html>
